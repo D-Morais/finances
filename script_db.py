@@ -77,5 +77,25 @@ def adc_transacao(usuario, valor, efetuado, fixo, tipo, data, categoria, descric
     conexao.close()
 
 
+def buscar_categoria(numero_categoria):
+    conexao = sql.connect("finances.db")
+    with conexao:
+        cursor = conexao.cursor()
+        cursor.execute(
+            """SELECT nome_categoria FROM categorias WHERE categoria = ?;""", (numero_categoria, )
+        )
+        return cursor.fetchall()
+
+
+def procura_usuario(nome_usuario):
+    conexao = sql.connect("finances.db")
+    with conexao:
+        cursor = conexao.cursor()
+        cursor.execute(
+            """SELECT usuario, senha FROM usuarios WHERE usuario = ?""", (nome_usuario, )
+        )
+        return cursor.fetchone()
+
+
 if __name__ == '__main__':
     init_db()
