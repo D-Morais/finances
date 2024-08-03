@@ -2,7 +2,7 @@ import sqlite3 as sql
 
 
 def init_db():
-    conexao = sql.connect("finances.db")
+    conexao = sql.connect("finance.db")
     cursor = conexao.cursor()
     cursor.execute(
         """
@@ -78,7 +78,7 @@ def adc_transacao(usuario, valor, efetuado, fixo, tipo, data, categoria, descric
 
 
 def buscar_categoria(numero_categoria):
-    conexao = sql.connect("finances.db")
+    conexao = sql.connect("finance.db")
     with conexao:
         cursor = conexao.cursor()
         cursor.execute(
@@ -88,7 +88,7 @@ def buscar_categoria(numero_categoria):
 
 
 def procura_usuario(nome_usuario):
-    conexao = sql.connect("finances.db")
+    conexao = sql.connect("finance.db")
     with conexao:
         cursor = conexao.cursor()
         cursor.execute(
