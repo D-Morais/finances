@@ -4,7 +4,7 @@ from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 
 from app import app
-from script_db import procura_usuario
+from script_db import procura_usuario, adc_usuario
 
 # =========  Layout  =========== #
 layout = dbc.Card([
@@ -92,7 +92,7 @@ def logar(n_clicks, usuario, senha):
         raise PreventUpdate
 
 
-# Callback to toggle modal
+# Callback para abertura do modal
 @app.callback(
     Output('modal', 'style'),
     [Input('novo_usuario', 'n_clicks'), Input('close-modal', 'n_clicks')],
@@ -104,3 +104,21 @@ def toggle_modal(reg_clicks, close_clicks, current_style):
             return {'display': 'none'}
         return {'display': 'block'}
     return {'display': 'none'}
+
+
+# Callback para criação de novo usuário
+@app.callback(
+    Output('reg-output-state', 'children'),
+    Input('adc_usuario', 'n_clicks'),
+    [
+        State('reg_usuario', 'value'),
+        State('reg_senha', 'value')
+    ],
+)
+def adc_novo_usuario(n_clicks, novo_usuario, nova_senha):
+    if n_clicks:
+        if novo_usuario and nova_senha:
+            adc_usuario(novo_usuario, nova_senha)
+            return dbc.Alert(f"Usuário adicionado com sucesso.", color="success", is_open=True, duration=2000)
+        else:
+            return dbc.Alert("Necessário preencher todos os campos.", color="warning", is_open=True, duration=2000)
